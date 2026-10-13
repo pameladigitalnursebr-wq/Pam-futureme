@@ -1,0 +1,10 @@
+# Repositório público: dados de leads NUNCA entram aqui.
+# Listas, bases e arquivos de trabalho ficam fora do git.
+dados/
+listas/
+trabalho/
+*.csv
+*.xlsx
+*.xls
+*.docx
+*.pdf
