@@ -168,8 +168,9 @@ Nada que envia mensagem, muda o agente ou altera negócio existente acontece sem
 
 Templates e Nuvia
 - [x] Campos de contato das variáveis criados na Nuvia (13/10)
-- [ ] Templates A e B validados pela Pamela
-- [ ] Templates enviados à Meta (com OK) e **APROVADOS**
+- [x] Templates A e B validados pela Pamela
+- [x] Templates enviados à Meta (13/10, em análise)
+- [ ] Templates **APROVADOS** pela Meta
 - [ ] Follow-up definido (reusar `fup1_abordagembia3` ou criar A/B)
 - [ ] Decisão sobre agente de IA para Universidades
 - [ ] Inbox confirmado

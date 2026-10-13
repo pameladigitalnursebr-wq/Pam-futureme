@@ -1,6 +1,6 @@
 # Templates WhatsApp — Universidades
 
-Status: **rascunho para validação da Pamela. Ainda NÃO enviados à Meta.**
+Status: **enviados à Meta em 13/10 com OK da Pamela — em análise (PENDING).** A: `1505968298006327` · B: `2301963743916243`
 Envio à Meta é irreversível (não dá para editar nem excluir depois), então só sobe com OK explícito.
 
 Configuração comum aos dois:
