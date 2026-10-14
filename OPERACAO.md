@@ -13,10 +13,12 @@ Dona da operação: Pamela Freitas · Atendimento dos leads: Fernanda · Atualiz
 |---|---|
 | Canal | WhatsApp via Nuvia, usada **só para o disparo** |
 | Número | **FutureMe - Jornada do Futuro** (`6ac6a6a095d8d8d9bbbb95ee`), não o B2B nem o B2C |
-| Mensagem | **Um único disparo**, sem follow-up |
+| Mensagens | Abertura (template A) às **10h30** + **um follow-up** no dia útil seguinte às **15h** |
 | Quem atende | **Fernanda**, humana. Sem agente de IA (a Bia não entra nesta operação) |
-| Teste A/B | Lote 1 só com o **template A** (volume de leads). O B será avaliado com a Pamela antes do lote 2 |
-| Início | Quinta, 15/10, às 9h |
+| Template | **A** (volume de leads) nos dois lotes. O B fica de reserva |
+| Lote 1 | **Marketing/comunicação + diretoria/reitoria** — abertura qui 15/10 10h30, follow-up sex 16/10 15h |
+| Lote 2 | **Comercial/captação** — abertura sex 16/10 10h30, follow-up seg 19/10 15h |
+| Sem resposta | 24h após o follow-up sem resposta → card no HubSpot **Comercial - Universidades / Leads Nuvia** |
 
 ## 2. Quem abordar
 
@@ -59,7 +61,10 @@ Textos e variáveis: [`templates/universidades_whatsapp.md`](templates/universid
 |---|---|
 | Tipo | WhatsApp (WAP_AUTO_CLOSER), gatilho MANUAL, audiência = lista |
 | Lista | `DD/MM Universidades - Lote N - template A` |
-| Etapa | **Uma só**: template de abertura |
+| Agendamento | SCHEDULED, 10h30 BRT |
+| Etapa 1 | `universidades_abertura_a_fernanda` |
+| Etapa 2 | `universidades_followup_fernanda`, no dia útil seguinte às 15h |
+| Funil | Universidades / Triagem (a etapa "Desqualificado / Sem engajamento" está mapeada para HubSpot Leads Nuvia) |
 | Dono e atendimento | Fernanda (HUMAN_USER) |
 | Agente de IA | Nenhum |
 | Estado | Sempre criada em **RASCUNHO**; só ativa com OK explícito da Pamela |
@@ -86,17 +91,22 @@ Objeções:
 | Pediu para sair | Nunca reabordar |
 | Repositório GitHub (público) | Nunca subir lista, telefone ou nome de lead |
 
-## 8. Status da semana
+## 8. Regras dos lotes (decisão de 14/10)
+
+- Lote 1: cargos de marketing/comunicação e diretoria/reitoria; lote 2: comercial/captação.
+- Fora: universidades já em negociação no funil Comercial - Universidades (cliente, em contato, reunião, proposta, perdido).
+- Até 2 contatos por universidade por lote (prioridade: marketing > diretoria); excedentes ficam de reserva.
+- Cortes de WhatsApp da seção 3 continuam valendo.
+
+## 9. Status
 
 | Lote | Contatos | Situação |
 |---|---|---|
-| 1 | 39 contatos, 25 IES | Lista e campanha em rascunho criadas em 14/10; aguardando aprovação do template e a Fernanda como usuária da Nuvia |
-| 2 | 28 contatos, 23 IES (após cortes) | Contatos atualizados; aguardando decisão sobre template (A ou B) |
-| 3 | 46 contatos, 35 IES | Sem WhatsApp: precisa de enriquecimento (~10 créditos por telefone) ou levantamento de contato |
+| 1 | 26 contatos, 20 IES | Campanha agendada (rascunho) para 15/10 10h30; aguarda OK de ativação |
+| 2 | 4 contatos, 3 IES | Campanha agendada (rascunho) para 16/10 10h30; aguarda OK de ativação |
 
 Pendências:
-- [ ] Template `universidades_abertura_a_fernanda` **APROVADO** pela Meta
-- [ ] Fernanda cadastrada como usuária na Nuvia
-- [ ] Etapa da campanha do lote 1 criada (depende dos dois itens acima)
-- [ ] OK da Pamela para ativar em 15/10, 9h
-- [ ] Onde registrar no HubSpot quem responder
+- [x] Template A aprovado pela Meta
+- [ ] Template de follow-up aprovado pela Meta (enviado em 14/10)
+- [ ] Etapa de follow-up nas duas campanhas
+- [ ] OK da Pamela para ativar

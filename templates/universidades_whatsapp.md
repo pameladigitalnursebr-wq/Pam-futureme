@@ -7,7 +7,7 @@
 | Item | Valor |
 |---|---|
 | Número | FutureMe - Jornada do Futuro (`6ac6a6a095d8d8d9bbbb95ee`) |
-| Status | Enviado à Meta em 14/10 com OK da Pamela — em análise (ID `1768246244419174`) |
+| Status | **Aprovado** pela Meta (ID `1768246244419174`) |
 | Categoria | MARKETING · pt_BR · parâmetros nomeados |
 | Remetente na mensagem | Fernanda |
 
@@ -21,7 +21,15 @@ Gostaria de entender como esses alunos podem se tornar matrícula neste ciclo. T
 
 Botões (resposta rápida): `Tenho interesse` · `Prefiro na próxima semana` · `Não sou a pessoa certa`
 
-Sem follow-up: o disparo é único.
+## Follow-up
+
+**`universidades_followup_fernanda`** — enviado à Meta em 14/10 (em análise, ID `1646601943524011`)
+
+```
+Olá, {{v_c_f_name}}, tudo bem? Você tem interesse em marcar uma conversa?
+```
+
+Botões: `Tenho interesse` · `Agora não`. Sai no dia útil seguinte à abertura, às 15h.
 
 ## Variáveis (campos de contato na Nuvia)
 
