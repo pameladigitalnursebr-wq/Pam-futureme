@@ -91,22 +91,23 @@ Objeções:
 | Pediu para sair | Nunca reabordar |
 | Repositório GitHub (público) | Nunca subir lista, telefone ou nome de lead |
 
-## 8. Regras dos lotes (decisão de 14/10)
+## 8. Regras dos lotes (decisão final de 14/10)
 
-- Lote 1: cargos de marketing/comunicação e diretoria/reitoria; lote 2: comercial/captação.
-- Fora: universidades já em negociação no funil Comercial - Universidades (cliente, em contato, reunião, proposta, perdido).
-- Até 2 contatos por universidade por lote (prioridade: marketing > diretoria); excedentes ficam de reserva.
-- Cortes de WhatsApp da seção 3 continuam valendo.
+- Falar com **todas** as universidades da base, inclusive as que já estão no HubSpot. Só ficam fora as da lista de exclusão da Pamela: UNIP, Belas Artes, UNIVAP, Afya, FMU, UniAnchieta, Unicive/UniFCV, FSFA, Uniube, Univesp, UFBRA, MoveEdu, Multivix, Unifamma/UNIFAMA, Ânima, BANDTEC, BILAC, UNICSUL, Braz Cubas, UNICID e IEVAL.
+- Lote 1: marketing/comunicação + diretoria/reitoria; lote 2: comercial/captação. Sem limite de contatos por universidade.
+- Contatos sem celular: enriquecer telefone na Nuvia (10 créditos/contato); quem ganhar celular entra no disparo de sexta.
+- Quem não responder à abertura nem ao follow-up vai para HubSpot Comercial - Universidades / Leads Nuvia (mesmo que duplique card); a SDR trabalha essa etapa.
+- Campanhas sem pular conversa ativa (skip_if_active_conversation = false).
 
-## 9. Status
+## 9. Status (14/10, noite)
 
 | Lote | Contatos | Situação |
 |---|---|---|
-| 1 | 26 contatos, 20 IES | Campanha agendada (rascunho) para 15/10 10h30; aguarda OK de ativação |
-| 2 | 4 contatos, 3 IES | Campanha agendada (rascunho) para 16/10 10h30; aguarda OK de ativação |
+| 1 | 95 contatos, 59 IES | Campanha agendada 15/10 10h30; ativação às 10h25 com OK da Pamela |
+| 2 | 11 contatos, 9 IES | Campanha agendada 16/10 10h30; ativação às 10h25 com OK da Pamela |
+| Enriquecidos | 48 contatos em enriquecimento | Nova tentativa 15/10 12h; os achados entram no disparo de 16/10 |
 
 Pendências:
-- [x] Template A aprovado pela Meta
-- [ ] Template de follow-up aprovado pela Meta (enviado em 14/10)
-- [ ] Etapa de follow-up nas duas campanhas
-- [ ] OK da Pamela para ativar
+- [x] Template A aprovado
+- [ ] Template de follow-up aprovado (em análise)
+- [ ] Enriquecimento de telefone (falhou ao iniciar em 14/10; nova tentativa 15/10)
