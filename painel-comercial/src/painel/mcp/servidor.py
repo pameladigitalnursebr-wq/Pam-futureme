@@ -66,6 +66,23 @@ class _Ambiguo(Exception):
         self.dimensao, self.termo, self.opcoes = dimensao, termo, opcoes
 
 
+def _escolher(dim: str, termo: str, opcoes: list[dict]) -> list[dict]:
+    """Quais valores um nome representa (mesma regra do modo Cowork), ou _Ambiguo.
+
+    Exatas (sigla, nome igual, curso + grau) entram juntas se a maior tiver ao menos 10% dos alunos da opção
+    mais citada: "puc" não vira a resposta livre "PUC - Rio" (1 aluno). Sem exata, vale a opção dominante (80%).
+    """
+    if not opcoes:
+        raise _Ambiguo(dim, termo, [])
+    maior = max(o["alunos"] for o in opcoes)
+    exatos = [o for o in opcoes if o.get("exato")]
+    if exatos and max(o["alunos"] for o in exatos) >= 0.1 * maior:
+        return exatos
+    if len(opcoes) == 1 or opcoes[0]["alunos"] >= 0.8 * sum(o["alunos"] for o in opcoes):
+        return [max(opcoes, key=lambda o: o["alunos"])]
+    raise _Ambiguo(dim, termo, sorted(opcoes, key=lambda o: -o["alunos"]))
+
+
 def _resolver(conn, filtros: FiltrosNome | None) -> tuple[Filtros, list[dict]]:
     """Nomes -> valores da base. Devolve os filtros e o que foi considerado em cada um."""
     if filtros is None:
@@ -80,16 +97,7 @@ def _resolver(conn, filtros: FiltrosNome | None) -> tuple[Filtros, list[dict]]:
             continue
         escolhidos: list[dict] = []
         for termo in termos:
-            opcoes = metricas.valores(conn, dim, str(termo), limite=10)
-            if not opcoes:
-                raise _Ambiguo(dim, str(termo), [])
-            exatos = [o for o in opcoes if o.get("exato")]
-            if exatos:
-                escolhidos += exatos          # grafias equivalentes do mesmo nome entram juntas
-            elif len(opcoes) == 1 or opcoes[0]["alunos"] >= 0.8 * sum(o["alunos"] for o in opcoes):
-                escolhidos.append(opcoes[0])
-            else:
-                raise _Ambiguo(dim, str(termo), opcoes)
+            escolhidos += _escolher(dim, str(termo), metricas.valores(conn, dim, str(termo), limite=10))
         valores[dim] = [o["chave"] for o in escolhidos]
         considerados.append({"filtro": dim, "valores": [o["rotulo"] for o in escolhidos]})
     return Filtros(valores, suspeitas), considerados
@@ -211,11 +219,7 @@ def detalhar(ctx: Context, filtros: FiltrosNome | None = None, pagina: int = 1, 
 
 
 def _uma_chave(conn, dimensao: str, nome: str) -> tuple[Any, str]:
-    opcoes = metricas.valores(conn, dimensao, nome, limite=10)
-    exatos = [o for o in opcoes if o.get("exato")]
-    escolha = exatos[0] if exatos else (opcoes[0] if len(opcoes) == 1 else None)
-    if escolha is None:
-        raise _Ambiguo(dimensao, nome, opcoes)
+    escolha = _escolher(dimensao, nome, metricas.valores(conn, dimensao, nome, limite=10))[0]
     return escolha["chave"], escolha["rotulo"]
 
 

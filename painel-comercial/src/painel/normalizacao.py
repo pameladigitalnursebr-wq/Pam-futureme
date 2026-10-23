@@ -13,6 +13,9 @@ from datetime import date, datetime, timedelta
 from functools import lru_cache
 
 _ESPACOS = re.compile(r"\s+")
+# Marcadores de "sem valor" comuns em exportações. São tratados como vazio por regra explícita,
+# independentemente da biblioteca usada para ler a planilha.
+_NULOS = {"N/A", "#N/A", "NULL", "NAN", "NONE", "#REF!", "#VALUE!", "#DIV/0!"}
 _ASPAS = re.compile(r"[\"“”'`´]")
 
 
@@ -25,8 +28,9 @@ def vazio(valor: object) -> bool:
         return True
     if isinstance(valor, float) and math.isnan(valor):
         return True
-    if isinstance(valor, str) and not valor.strip():
-        return True
+    if isinstance(valor, str):
+        t = valor.strip()
+        return not t or t.upper() in _NULOS
     try:  # pandas.NA / NaT
         return bool(valor != valor)
     except (TypeError, ValueError):
@@ -35,7 +39,8 @@ def vazio(valor: object) -> bool:
 
 @lru_cache(maxsize=262_144)
 def _texto_str(valor: str) -> str | None:
-    return _ESPACOS.sub(" ", valor).strip() or None
+    t = _ESPACOS.sub(" ", valor).strip()
+    return None if not t or t.upper() in _NULOS else t
 
 
 @lru_cache(maxsize=262_144)

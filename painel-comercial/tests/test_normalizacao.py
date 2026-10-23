@@ -9,6 +9,7 @@ def test_chave_ignora_acento_caixa_e_espacos():
     assert n.chave("  Centro Universitário   Anhanguera de São Paulo ") == "CENTRO UNIVERSITARIO ANHANGUERA DE SAO PAULO"
     assert n.chave('"FACULDADE ""OSWALDO CRUZ"""') == "FACULDADE OSWALDO CRUZ"
     assert n.chave(None) is None and n.chave("   ") is None
+    assert n.texto("N/A") is None and n.texto("#N/A") is None and n.vazio(" null ")
 
 
 def test_modalidades_em_qualquer_ordem_e_sinonimos():

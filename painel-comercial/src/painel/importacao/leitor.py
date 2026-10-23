@@ -54,9 +54,12 @@ def _ler_planilhas(caminho: Path) -> dict[str, pd.DataFrame]:
     sufixo = caminho.suffix.lower()
     if sufixo in {".xlsx", ".xlsm", ".xls"}:
         try:
-            return pd.read_excel(caminho, sheet_name=None, header=None, dtype=object, engine="calamine")
+            # keep_default_na=False: o que conta como vazio é decidido pela normalização, não pelo pandas.
+            return pd.read_excel(caminho, sheet_name=None, header=None, dtype=object, engine="calamine",
+                                 keep_default_na=False, na_values=[""])
         except ImportError:
-            return pd.read_excel(caminho, sheet_name=None, header=None, dtype=object)
+            return pd.read_excel(caminho, sheet_name=None, header=None, dtype=object,
+                                 keep_default_na=False, na_values=[""])
     if sufixo in {".csv", ".txt"}:
         for codificacao in ("utf-8-sig", "latin-1"):
             try:

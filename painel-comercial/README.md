@@ -6,7 +6,8 @@ Substitui as planilhas de mercado por uma **base pesquisável**: quantos alunos 
 |---|---|
 | [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md) | Arquitetura, banco, entidades, relacionamentos, importação, painel, Claude e decisões |
 | [`docs/OPERACAO.md`](docs/OPERACAO.md) | Instalar, publicar, importar planilhas, revisar instituições, usuários |
-| [`conversas/CONFIGURACAO.md`](conversas/CONFIGURACAO.md) | Ligar o Claude ao painel (conector MCP + projeto) |
+| [`cowork/LEIA-ME.md`](cowork/LEIA-ME.md) | **Modo Cowork**: o Claude monta a base e responde sozinho, sem servidor (skill `inteligencia-comercial.zip`) |
+| [`conversas/CONFIGURACAO.md`](conversas/CONFIGURACAO.md) | Ligar o Claude ao painel publicado (conector MCP + projeto) |
 | [`conversas/INSTRUCOES_PROJETO.md`](conversas/INSTRUCOES_PROJETO.md) | Instruções para colar no projeto do claude.ai |
 
 ## Estrutura
@@ -23,7 +24,8 @@ src/painel/
   revisao.py         revisão e unificação de instituições
   cli.py             comando `painel`
 tests/               testes com dados sintéticos
-conversas/           configuração do projeto no Claude
+conversas/           configuração do projeto no Claude (modo servidor, via MCP)
+cowork/              skill do modo Cowork (SQLite, sem servidor) e montar.py, que gera o .zip
 ```
 
 ## Começo rápido

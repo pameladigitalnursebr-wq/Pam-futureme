@@ -323,6 +323,15 @@ Regras:
 
 ---
 
+### Modo Cowork (sem servidor)
+
+Enquanto o serviço não é publicado, o Claude Cowork usa a skill `cowork/inteligencia-comercial`: o mesmo modelo
+de dados em um arquivo SQLite na pasta de trabalho da pessoa, montado a partir das planilhas, com a mesma
+importação (hash, exclusão lógica, trava de 20%, arquivo repetido), as mesmas regras de normalização
+(copiadas de `src/painel/` por `cowork/montar.py`, com teste que impede divergência) e as mesmas definições de
+alunos e interesses. Com as planilhas reais, as respostas são idênticas às do PostgreSQL.
+O que fica de fora: login e perfis, histórico de consultas, acesso compartilhado em tempo real.
+
 ## 8. Atualização da base
 
 | Modo | Quando usar | Exclusões |

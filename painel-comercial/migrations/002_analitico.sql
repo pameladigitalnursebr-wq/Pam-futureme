@@ -18,9 +18,10 @@ SELECT
     EXTRACT(YEAR FROM a.cadastrado_em)::smallint AS ano_cadastro,
     CASE
         WHEN a.data_nascimento IS NULL THEN 'Não informado'
-        WHEN age(current_date, a.data_nascimento) < interval '14 years' THEN 'Até 13 anos'
-        WHEN age(current_date, a.data_nascimento) < interval '18 years' THEN '14 a 17 anos'
-        WHEN age(current_date, a.data_nascimento) < interval '25 years' THEN '18 a 24 anos'
+        -- Comparação de datas (exata). Não usar age() < interval: intervalos comparam meses como 30 dias.
+        WHEN a.data_nascimento > current_date - interval '14 years' THEN 'Até 13 anos'
+        WHEN a.data_nascimento > current_date - interval '18 years' THEN '14 a 17 anos'
+        WHEN a.data_nascimento > current_date - interval '25 years' THEN '18 a 24 anos'
         ELSE '25 anos ou mais'
     END                                    AS faixa_etaria,
     a.situacao_atual,
