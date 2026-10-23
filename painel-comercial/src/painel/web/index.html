@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inteligência Comercial · FutureMe</title>
+  <link rel="stylesheet" href="/static/estilo.css">
+</head>
+<body>
+  <!-- Login -->
+  <section id="tela-login" class="login" hidden>
+    <form id="form-login" class="cartao login-cartao">
+      <h1>Inteligência Comercial</h1>
+      <p class="mudo">Entre com seu e-mail FutureMe.</p>
+      <label>E-mail <input name="email" type="email" autocomplete="username" required></label>
+      <label>Senha <input name="senha" type="password" autocomplete="current-password" required></label>
+      <button class="primario" type="submit">Entrar</button>
+      <p id="erro-login" class="erro" role="alert"></p>
+    </form>
+  </section>
+
+  <div id="app" hidden>
+    <header class="topo">
+      <div class="marca">Inteligência Comercial <span class="mudo">FutureMe</span></div>
+      <nav class="abas-principais" aria-label="Seções">
+        <button data-vista="painel" class="ativa">Painel</button>
+        <button data-vista="importacoes" data-permissao="importar">Importações</button>
+        <button data-vista="revisao" data-permissao="revisar_instituicoes">Revisar instituições</button>
+        <button data-vista="admin" data-permissao="administrar">Usuários e acesso</button>
+      </nav>
+      <div class="usuario">
+        <span id="base-atualizada" class="mudo"></span>
+        <span id="nome-usuario"></span>
+        <button id="sair" class="discreto">Sair</button>
+      </div>
+    </header>
+
+    <!-- PAINEL -->
+    <main id="vista-painel" class="vista painel">
+      <aside class="filtros" aria-label="Filtros">
+        <div class="filtros-topo">
+          <h2>Filtros</h2>
+          <button id="limpar-filtros" class="discreto">Limpar</button>
+        </div>
+        <div id="lista-filtros"></div>
+        <label class="check"><input type="checkbox" id="incluir-suspeitas"> Incluir respostas livres suspeitas</label>
+      </aside>
+
+      <section class="conteudo">
+        <div class="busca-rapida">
+          <input id="busca" type="search" placeholder="Busca rápida: instituição, curso, cidade, escola…  (ex.: unip, medicina, campinas)" autocomplete="off" aria-label="Busca rápida">
+          <div id="busca-resultados" class="busca-resultados" hidden></div>
+        </div>
+
+        <div id="filtros-ativos" class="chips"></div>
+        <div id="avisos"></div>
+
+        <div class="kpis" id="kpis"></div>
+
+        <section class="cartao">
+          <div class="cartao-topo">
+            <h2>Rankings</h2>
+            <div class="abas" id="abas-ranking" role="tablist"></div>
+            <div class="acoes">
+              <select id="limite-ranking" aria-label="Quantidade">
+                <option value="10">Top 10</option><option value="25">Top 25</option><option value="50">Top 50</option>
+              </select>
+              <button class="discreto" data-exportar="ranking" data-permissao="exportar">Excel</button>
+            </div>
+          </div>
+          <div id="ranking" class="barras"></div>
+          <p class="dica">Clique em uma barra para filtrar por ela.</p>
+        </section>
+
+        <div class="grade-distribuicoes" id="distribuicoes"></div>
+
+        <section class="cartao">
+          <div class="cartao-topo">
+            <h2>Resultado detalhado <span id="total-detalhe" class="mudo"></span></h2>
+            <div class="acoes">
+              <select id="ordenar" aria-label="Ordenar">
+                <option value="recentes">Mais recentes</option><option value="antigos">Mais antigos</option>
+                <option value="cidade">Cidade</option><option value="escola">Escola</option>
+              </select>
+              <button class="discreto" data-exportar="detalhe-csv" data-permissao="exportar">CSV</button>
+              <button class="discreto" data-exportar="detalhe-xlsx" data-permissao="exportar">Excel</button>
+            </div>
+          </div>
+          <div class="tabela-rolagem"><table id="tabela-detalhe"></table></div>
+          <div class="paginacao" id="paginacao"></div>
+        </section>
+      </section>
+    </main>
+
+    <!-- IMPORTAÇÕES -->
+    <main id="vista-importacoes" class="vista estreita" hidden>
+      <section class="cartao">
+        <h2>Enviar planilha</h2>
+        <p class="mudo">O sistema identifica sozinho se é a base de interessados ou a de instituições, valida, compara com a base atual e recalcula o painel.</p>
+        <form id="form-importacao" class="form-importacao">
+          <input type="file" name="arquivo" accept=".xlsx,.csv" required>
+          <fieldset>
+            <legend>Modo</legend>
+            <label><input type="radio" name="modo" value="completo" checked> Completo — o arquivo é a base inteira (o que não vier é desativado)</label>
+            <label><input type="radio" name="modo" value="incremental"> Incremental — só acrescenta e atualiza</label>
+          </fieldset>
+          <label class="check"><input type="checkbox" name="forcar"> Forçar (reimportar arquivo repetido ou aceitar remoção acima do limite)</label>
+          <button class="primario" type="submit">Importar</button>
+        </form>
+        <div id="resultado-importacao"></div>
+      </section>
+      <section class="cartao">
+        <h2>Histórico de importações</h2>
+        <div class="tabela-rolagem"><table id="tabela-importacoes"></table></div>
+      </section>
+    </main>
+
+    <!-- REVISÃO -->
+    <main id="vista-revisao" class="vista estreita" hidden>
+      <section class="cartao">
+        <h2>Revisar instituições <span id="total-revisao" class="mudo"></span></h2>
+        <p class="mudo">Nomes que vieram só da base de interessados ou parecem texto livre. Nada é unificado sozinho: escolha a instituição correta ou marque como suspeita (sai dos rankings).</p>
+        <div id="lista-revisao"></div>
+      </section>
+    </main>
+
+    <!-- ADMINISTRAÇÃO -->
+    <main id="vista-admin" class="vista estreita" hidden>
+      <section class="cartao">
+        <h2>Usuários</h2>
+        <form id="form-usuario" class="linha-form">
+          <input name="nome" placeholder="Nome" required>
+          <input name="email" type="email" placeholder="email@futureme.tech" required>
+          <select name="papel"><option>leitor</option><option>analista</option><option>gestor</option><option>admin</option></select>
+          <input name="senha" type="password" placeholder="Senha inicial (mín. 10)" minlength="10">
+          <button class="primario" type="submit">Salvar</button>
+        </form>
+        <p id="papeis" class="mudo"></p>
+        <div class="tabela-rolagem"><table id="tabela-usuarios"></table></div>
+      </section>
+      <section class="cartao">
+        <h2>Chaves de API</h2>
+        <p class="mudo">Use uma chave com escopo <b>consulta</b> no conector do Claude. A chave aparece uma única vez.</p>
+        <form id="form-chave" class="linha-form">
+          <input name="nome" placeholder="Ex.: Conector Claude" required>
+          <select name="escopo"><option value="consulta">consulta</option><option value="exportacao">exportacao</option><option value="importacao">importacao</option></select>
+          <button class="primario" type="submit">Criar chave</button>
+        </form>
+        <div id="chave-criada"></div>
+        <div class="tabela-rolagem"><table id="tabela-chaves"></table></div>
+      </section>
+      <section class="cartao">
+        <h2>Últimas consultas</h2>
+        <div class="tabela-rolagem"><table id="tabela-consultas"></table></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="dica-flutuante" class="dica-flutuante" role="tooltip" hidden></div>
+  <script src="/static/app.js" type="module"></script>
+</body>
+</html>

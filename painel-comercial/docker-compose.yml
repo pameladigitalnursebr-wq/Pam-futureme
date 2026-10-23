@@ -1,0 +1,28 @@
+# Ambiente local completo: PostgreSQL + aplicação. Em produção, use um PostgreSQL gerenciado.
+services:
+  banco:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: painel
+      POSTGRES_USER: painel
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-troque-esta-senha}
+    volumes:
+      - dados_banco:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U painel"]
+      interval: 5s
+      retries: 10
+
+  app:
+    build: .
+    env_file: .env
+    environment:
+      PAINEL_DATABASE_URL: postgresql://painel:${POSTGRES_PASSWORD:-troque-esta-senha}@banco:5432/painel
+    ports:
+      - "8000:8000"
+    depends_on:
+      banco:
+        condition: service_healthy
+
+volumes:
+  dados_banco:

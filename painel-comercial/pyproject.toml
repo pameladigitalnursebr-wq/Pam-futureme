@@ -1,0 +1,35 @@
+[project]
+name = "painel-comercial"
+version = "0.1.0"
+description = "Painel de Inteligência Comercial da FutureMe: base pesquisável de interessados e instituições."
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "psycopg[binary,pool]>=3.2",
+    "pandas>=2.2",
+    "openpyxl>=3.1",
+    "python-calamine>=0.2",
+    "pyjwt>=2.8",
+    "python-multipart>=0.0.9",
+    "mcp>=2.3,<3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27"]
+
+[project.scripts]
+painel = "painel.cli:main"
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+painel = ["web/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

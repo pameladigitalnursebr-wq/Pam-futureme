@@ -8,3 +8,10 @@ trabalho/
 *.xls
 *.docx
 *.pdf
+
+# Painel comercial: ambiente local e segredos
+.venv/
+.env
+__pycache__/
+*.egg-info/
+.pytest_cache/
