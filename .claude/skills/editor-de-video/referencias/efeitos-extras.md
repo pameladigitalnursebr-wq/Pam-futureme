@@ -26,3 +26,20 @@ não faz, e só para **aquela cena**:
 3. Renderize a cena com fundo transparente (`--format webm`), extraia os quadros em PNG e entre no vídeo
    pelo `extra.js` (`img()` quadro a quadro) ou como `imagem` `modo: solto`.
 4. Confira o quadro antes do render inteiro, como toda tela.
+
+> **Em teste** (veio do ramo `cofre/mac-2026-11-02` do editor-video-ia, ainda não está na versão oficial).
+
+## 1b · Fogo de verdade (filmagem real, não desenho)
+Para queimar um papel com a headline, um logo ou a tela inteira com fogo filmado:
+1. Baixe uma filmagem grátis de papel queimando em **fundo verde** (Pexels, por exemplo "burning paper green background";
+   anote a licença). O papel tem de começar inteiro (escuro) e o verde aparecer conforme queima.
+2. Gere as camadas: `.venv/bin/python motor/fogo_real.py <clip.mp4> <projeto>/assets/fogo/<nome> --largura 900 --altura 360
+   --acima 260 --de 1.8 --ate 9.4 --velocidade 3.5 --espelhar`. `--de/--ate` = do primeiro fogo até quase tudo verde;
+   `--velocidade` acelera; `--zoom` e `--foco X Y` põem o ponto onde o fogo nasce onde você quer (o isqueiro, por exemplo);
+   `--acabar S` some com o que sobrou quando o trecho não queima tudo. O script diz em quantos segundos a caixa queima toda.
+3. No `extra.js`: `import { FogoReal } from '/comp/efeitos/fogo_real.js';`, prepare com `c._fogo = await FogoReal(api,
+   'assets/fogo/<nome>')` e, numa cena `async draw`, `await c._fogo.desenha(x, G, t - t_queima, { x, y, rot, esc, sombra })`,
+   onde `G` é um canvas do tamanho da caixa com o que vai queimar. Antes de `t_queima` o desenho aparece inteiro; depois,
+   queima com a borda em carvão e as chamas da filmagem por cima (mistura "screen"). Para a tela inteira, copie a tela em `G`,
+   desenhe por baixo o que deve aparecer e queime `G` por cima.
+
